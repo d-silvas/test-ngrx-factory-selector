@@ -11,6 +11,6 @@ export class AppComponent {
   getName3Selector: any;
 
   constructor() {
-    this.getName3Selector = selectors.getName3('qqq');
+    this.getName3Selector = selectors.getName3('AppComponent');
   }
 }

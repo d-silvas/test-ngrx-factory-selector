@@ -18,7 +18,7 @@ describe('AppComponent', () => {
               // APPROACH #1 ONLY
               // We mock the parent selector
               selector: selectors.getFeatureState,
-              value: { name: 'TestMockedName' },
+              value: { name: 'Mocked1' },
             },
           ],
         }),
@@ -33,9 +33,9 @@ describe('AppComponent', () => {
   describe('selectors', () => {
     it('APPROACH #1', (done: DoneFn) => {
       // !! This uses the real parent selector !! (See console logs)
-      store.pipe(select(selectors.getName1('TestINPUT#1'))).subscribe((s) => {
+      store.pipe(select(selectors.getName1('Test1'))).subscribe((s) => {
         // By mocking the parent selector (getFeatureState), we have complete control over what our selector (getName1) returns
-        expect(s).toEqual('TestINPUT#1 TestMockedName');
+        expect(s).toEqual('Test1 Mocked1');
         done();
       });
     });
@@ -43,22 +43,22 @@ describe('AppComponent', () => {
     it('APPROACH #2', (done: DoneFn) => {
       // Spy directly on the function
       spyOn(selectors.factorySelectors, 'getName2').and.returnValue(
-        ((_: FeatureState) => 'QQQ') as any
+        ((_: FeatureState) => 'Mocked2') as any
       );
       store
-        .pipe(select(selectors.factorySelectors.getName2('TestINPUT#2')))
+        .pipe(select(selectors.factorySelectors.getName2('Test2')))
         .subscribe((s) => {
-          expect(s).toEqual('QQQ');
+          expect(s).toEqual('Mocked2');
           done();
         });
     });
 
     it('APPROACH #3', (done: DoneFn) => {
       // Store the selector and override it
-      store.overrideSelector(component.getName3Selector, '333');
+      store.overrideSelector(component.getName3Selector, 'Mocked3');
       store.refreshState();
       store.pipe(select(component.getName3Selector)).subscribe((s) => {
-        expect(s).toEqual('333');
+        expect(s).toEqual('Mocked3');
         done();
       });
     });

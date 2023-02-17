@@ -5,12 +5,11 @@ export const getFeatureState = createFeatureSelector<FeatureState>('feature');
 
 // APPROACH #1
 // We will mock the parent selector, getFeatureState
-export const getName1 = function (input: string) {
-  return createSelector(getFeatureState, (state): string => {
+export const getName1 = (input: string) =>
+  createSelector(getFeatureState, (state): string => {
     console.log('REAL SELECTOR #1', state, input);
     return input + ' ' + state.name;
   });
-};
 
 // APPROACH #2
 // Our original problem is that we can not spy on "getName", because "getName" is a property
@@ -25,9 +24,8 @@ export const factorySelectors = {
 
 // APPROACH #3
 // We will store the selector which is returned by this function in the component
-export const getName3 = function (input: string) {
-  return createSelector(getFeatureState, (state): string => {
+export const getName3 = (input: string) =>
+  createSelector(getFeatureState, (state): string => {
     console.log('REAL SELECTOR #3', state, input);
     return input + ' ' + state.name;
   });
-};
